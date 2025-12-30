@@ -2,8 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const fs = require("fs");
 const cors = require("cors");
+const pino = require("pino");
 const app = express();
 const port = 3030;
+
+const logger = pino();
 
 app.use(cors());
 app.use(require("body-parser").urlencoded({ extended: false }));
@@ -59,6 +62,7 @@ app.get("/fetchReviews/dealer/:id", async (req, res) => {
 app.get("/fetchDealers", async (req, res) => {
   try {
     const documents = await Dealerships.find({});
+    logger.info("Fetching dealers", documents);
     return res.json(documents);
   } catch (error) {
     return res.status(500).json({ error: "Error fetching dealers" });
