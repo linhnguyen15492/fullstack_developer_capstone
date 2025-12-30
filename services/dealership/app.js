@@ -49,7 +49,7 @@ app.get("/fetchReviews", async (req, res) => {
 app.get("/fetchReviews/dealer/:id", async (req, res) => {
   try {
     const documents = await Reviews.find({ dealership: req.params.id });
-    return res.json(documents);
+    return res.status(200).json(documents);
   } catch (error) {
     return res.status(500).json({ error: "Error fetching reviews" });
   }

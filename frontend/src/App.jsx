@@ -5,6 +5,8 @@ import Header from "./components/Header/Header"
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Register from "./components/Register/Register";
+import Dealers from './components/Dealers/Dealers';
+import Dealer from "./components/Dealers/Dealer"
 
 
 function App() {
@@ -15,6 +17,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/dealers" element={<Dealers />} />
+        <Route path="/dealer/:id" element={<Dealer />} />
       </Routes>
     </>
   );

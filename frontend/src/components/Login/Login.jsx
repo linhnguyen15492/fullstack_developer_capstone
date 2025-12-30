@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 
 import "./Login.css";
 
+const BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL;
+
 const Login = ({ onClose }) => {
 
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [open, setOpen] = useState(true)
 
-  let login_url = window.location.origin + "/djangoapp/login";
+  // let login_url = window.location.origin + "/djangoapp/login";
+  let login_url = `${BACKEND_URL}/login`;
 
   const login = async (e) => {
     e.preventDefault();

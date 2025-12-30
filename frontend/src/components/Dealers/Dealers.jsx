@@ -4,24 +4,31 @@ import "../../assets/style.css";
 import Header from '../Header/Header';
 import review_icon from "../../assets/reviewicon.png"
 
+
+const BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL;
+
 const Dealers = () => {
   const [dealersList, setDealersList] = useState([]);
   // let [state, setState] = useState("")
   let [states, setStates] = useState([])
 
-  // let root_url = window.location.origin
-  let dealer_url = "/djangoapp/get_dealers";
+  let dealer_url = `${BACKEND_URL}/get_dealers`;
 
-  let dealer_url_by_state = "/djangoapp/get_dealers/";
 
   const filterDealers = async (state) => {
-    dealer_url_by_state = dealer_url_by_state + state;
+    if (state === "All") {
+      get_dealers();
+      return;
+    }
+
+    let dealer_url_by_state = `${BACKEND_URL}/get_dealers/${state}`;
     const res = await fetch(dealer_url_by_state, {
       method: "GET"
     });
     const retobj = await res.json();
+
     if (retobj.status === 200) {
-      let state_dealers = Array.from(retobj.dealers)
+      let state_dealers = await Array.from(retobj.dealers)
       setDealersList(state_dealers)
     }
   }
@@ -30,9 +37,12 @@ const Dealers = () => {
     const res = await fetch(dealer_url, {
       method: "GET"
     });
+
     const retobj = await res.json();
+
     if (retobj.status === 200) {
-      let all_dealers = Array.from(retobj.dealers)
+      let all_dealers = await Array.from(retobj.dealers)
+      console.log(all_dealers)
       let states = [];
       all_dealers.forEach((dealer) => {
         states.push(dealer.state)
@@ -42,6 +52,7 @@ const Dealers = () => {
       setDealersList(all_dealers)
     }
   }
+
   useEffect(() => {
     get_dealers();
   }, []);
@@ -50,45 +61,49 @@ const Dealers = () => {
   let isLoggedIn = sessionStorage.getItem("username") != null ? true : false;
   return (
     <div>
-      <Header />
-
       <table className='table'>
-        <tr>
-          <th>ID</th>
-          <th>Dealer Name</th>
-          <th>City</th>
-          <th>Address</th>
-          <th>Zip</th>
-          <th>
-            <select name="state" id="state" onChange={(e) => filterDealers(e.target.value)}>
-              <option value="" selected disabled hidden>State</option>
-              <option value="All">All States</option>
-              {states.map(state => (
-                <option value={state}>{state}</option>
-              ))}
-            </select>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Dealer Name</th>
+            <th>City</th>
+            <th>Address</th>
+            <th>Zip</th>
+            <th>
+              <select name="state" id="state" onChange={(e) => filterDealers(e.target.value)}>
+                <option value="" selected disabled hidden>State</option>
+                <option value="All">All States</option>
+                {states.map(state => (
+                  <option value={state}>{state}</option>
+                ))}
+              </select>
 
-          </th>
+            </th>
+          </tr>
           {isLoggedIn ? (
-            <th>Review Dealer</th>
+            <tr>
+              <th>Review Dealer</th>
+            </tr>
           ) : <></>
           }
-        </tr>
-        {dealersList.map(dealer => (
-          <tr>
-            <td>{dealer['id']}</td>
-            <td><a href={'/dealer/' + dealer['id']}>{dealer['full_name']}</a></td>
-            <td>{dealer['city']}</td>
-            <td>{dealer['address']}</td>
-            <td>{dealer['zip']}</td>
-            <td>{dealer['state']}</td>
-            {isLoggedIn ? (
-              <td><a href={`/postreview/${dealer['id']}`}><img src={review_icon} className="review_icon" alt="Post Review" /></a></td>
-            ) : <></>
-            }
-          </tr>
-        ))}
-      </table>;
+        </thead>
+        <tbody>
+          {dealersList.map(dealer => (
+            <tr>
+              <td>{dealer['id']}</td>
+              <td><a href={'/dealer/' + dealer['id']}>{dealer['full_name']}</a></td>
+              <td>{dealer['city']}</td>
+              <td>{dealer['address']}</td>
+              <td>{dealer['zip']}</td>
+              <td>{dealer['state']}</td>
+              {isLoggedIn ? (
+                <td><a href={`/postreview/${dealer['id']}`}><img src={review_icon} className="review_icon" alt="Post Review" /></a></td>
+              ) : <></>
+              }
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }

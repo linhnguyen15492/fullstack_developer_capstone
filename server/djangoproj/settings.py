@@ -31,7 +31,10 @@ DEBUG = True
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 # CSRF_TRUSTED_ORIGINS=['<your application URL here>']
-CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1"]
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1", "http://localhost"]
+
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [],
@@ -47,6 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -56,6 +60,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "djangoproj.urls"

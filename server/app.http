@@ -6,11 +6,15 @@ GET http://127.0.0.1:8000/djangoapp/get_dealers/Minnesota HTTP/1.1
 
 ###
 
-GET http://127.0.0.1:8000/djangoapp/dealer/1 HTTP/1.1 
+GET http://127.0.0.1:8000/djangoapp/dealer/15 HTTP/1.1 
 
 ###
 
 GET http://127.0.0.1:8000/djangoapp/reviews/dealer/15 HTTP/1.1 
+
+###
+
+GET http://127.0.0.1:8000/djangoapp/reviews/dealer/1 HTTP/1.1 
 
 ###
 
