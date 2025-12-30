@@ -5,6 +5,8 @@ import email_icon from "../../assets/email.png"
 import password_icon from "../../assets/password.png"
 import close_icon from "../../assets/close.png"
 
+const BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL;
+
 const Register = () => {
     // State variables for form inputs
     const [userName, setUserName] = useState("");
@@ -22,7 +24,7 @@ const Register = () => {
     const register = async (e) => {
         e.preventDefault();
 
-        let register_url = window.location.origin + "/djangoapp/register";
+        let register_url = `${BACKEND_URL}/register`;
 
         // Send POST request to register endpoint
         const res = await fetch(register_url, {

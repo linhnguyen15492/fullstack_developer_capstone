@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import "./Dealers.css";
 import "../../assets/style.css";
@@ -37,17 +37,14 @@ const Dealer = () => {
       method: "GET"
     });
     const retobj = await res.json();
-    console.log(retobj)
 
-    if (retobj.status === 200) {
-      if (retobj.reviews.length > 0) {
-        setReviews(retobj.reviews)
-        console.log(reviews)
-      } else {
-        setUnreviewed(true);
-      }
+    if (retobj.reviews) {
+      setReviews(retobj.reviews)
+    } else {
+      setUnreviewed(true);
     }
   }
+
 
 
   const senti_icon = (sentiment) => {
@@ -61,7 +58,6 @@ const Dealer = () => {
 
     if (sessionStorage.getItem("username")) {
       setPostReview(<a href={post_review}><img src={review_icon} style={{ width: '10%', marginLeft: '10px', marginTop: '10px' }} alt='Post Review' /></a>)
-
     }
   }, []);
 
@@ -75,7 +71,7 @@ const Dealer = () => {
       </div>
 
       <div class="reviews_panel">
-        {reviews.length !== 0 && unreviewed === false ? <text>Loading Reviews....</text> : unreviewed === true ? <div>No reviews yet! </div> :
+        {reviews.length === 0 && unreviewed === false ? <text>Loading Reviews....</text> : unreviewed === true ? <div>No reviews yet!</div> :
           reviews.map(review => (
             <div className='review_panel'>
               <img src={senti_icon(review.sentiment)} className="emotion_icon" alt='Sentiment' />
