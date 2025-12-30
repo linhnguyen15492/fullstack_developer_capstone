@@ -1,3 +1,39 @@
 GET http://127.0.0.1:8000/djangoapp/get_cars HTTP/1.1
 
 ###
+
+GET http://127.0.0.1:8000/djangoapp/get_dealers/Minnesota HTTP/1.1
+
+###
+
+GET http://127.0.0.1:8000/djangoapp/dealer/1 HTTP/1.1 
+
+###
+
+GET http://127.0.0.1:8000/djangoapp/reviews/dealer/15 HTTP/1.1 
+
+###
+
+POST http://127.0.0.1:8000/djangoapp/add_review HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Nguyen Ngoc Hong Linh",
+    "dealership": 15,
+    "review": "Mua xe vinfast",
+    "purchase": true,
+    "purchase_date": "12/31/2025",
+    "car_make": "Vinfast",
+    "car_model": "Vf9",
+    "car_year": 2024
+}
+
+###
+
+POST http://127.0.0.1:8000/djangoapp/login HTTP/1.1
+content-type: application/json
+
+{
+    "userName": "linhnguyen",
+    "password": "abc123"
+}

@@ -1,0 +1,21 @@
+GET http://localhost:3030/fetchDealers HTTP/1.1
+
+###
+
+GET http://localhost:3030/fetchReviews/dealer/29 HTTP/1.1
+
+###
+
+POST http://localhost:3030/insert_review HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Nguyen Ngoc Hong Linh",
+    "dealership": 15,
+    "review": "Mua xe vinfast",
+    "purchase": true,
+    "purchase_date": "12/31/2025",
+    "car_make": "Vinfast",
+    "car_model": "Vf9",
+    "car_year": 2024
+}

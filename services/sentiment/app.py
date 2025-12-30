@@ -13,10 +13,10 @@ def home():
     Use /analyze/text to get the sentiment"
 
 
-@app.get("/analyze/<input_txt>")
-def analyze_sentiment(input_txt):
+@app.get("/analyze/<input_text>")
+def analyze_sentiment(input_text):
 
-    scores = sia.polarity_scores(input_txt)
+    scores = sia.polarity_scores(input_text)
     print(scores)
     pos = float(scores["pos"])
     neg = float(scores["neg"])

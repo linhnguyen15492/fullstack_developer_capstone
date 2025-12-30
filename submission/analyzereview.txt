@@ -1,0 +1,2 @@
+(.venv) linhnguyen@DESKTOP-KV2R5JB:~/fullstack_developer_capstone$ curl -X GET 'http://127.0.0.1:5000/analyze/Fantastic%20services'
+{"sentiment": "positive"}
