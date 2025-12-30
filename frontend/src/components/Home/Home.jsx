@@ -1,17 +1,19 @@
 import "../../assets/style.css";
 import "../../assets/bootstrap.min.css";
-import Header from "../Header/Header"
+
+
 
 const Home = () => {
     return (
         <>
-            <div>
-                <img src="static/car_dealership.jpg" className="card-img-top" alt="..." />
-                <div className="banner">
-                    <h5>Welcome to our Dealerships!</h5>
-                    <a href="/dealers" className="btn">View Dealerships</a>
+            <div style={{ display: 'flex', 'flex-direction': 'column' }}>
+                <div className="card" style={{ width: '50%', marginTop: '50px', alignSelf: 'center' }}>
+                    <img src="static/car_dealership.jpg" className="card-img-top" alt="..." />
+                    <div className="banner">
+                        <h5>Welcome to our Dealerships!</h5>
+                        <a href="/dealers" className="btn" style={{ backgroundColor: 'aqua', margin: '10px' }}>View Dealerships</a>
+                    </div>
                 </div>
-
             </div>
         </>
     )

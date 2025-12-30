@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import "./Login.css";
-import Header from '../Header/Header';
 
 const Login = ({ onClose }) => {
 
@@ -42,8 +41,6 @@ const Login = ({ onClose }) => {
 
   return (
     <div>
-      <Header />
-
       <div onClick={onClose}>
         <div
           onClick={(e) => {
