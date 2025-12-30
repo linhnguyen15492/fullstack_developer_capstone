@@ -1,5 +1,0 @@
-GET http://localhost:3030/fetchDealers HTTP/1.1
-
-###
-
-GET http://localhost:3030/fetchReviews/dealer/29 HTTP/1.1

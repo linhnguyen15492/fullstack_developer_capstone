@@ -20,7 +20,7 @@ content-type: application/json
 {
     "name": "Nguyen Ngoc Hong Linh",
     "dealership": 15,
-    "review": "Mua xe vinfast",
+    "review": "xe vinfast như shit",
     "purchase": true,
     "purchase_date": "12/31/2025",
     "car_make": "Vinfast",
