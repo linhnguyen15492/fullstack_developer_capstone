@@ -1,9 +1,4 @@
-from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404, render, redirect
-from django.contrib import messages
-from datetime import datetime
 from django.http import JsonResponse
 from django.contrib.auth import login, logout, authenticate
 import logging
@@ -11,7 +6,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from .models import CarMake, CarModel
 from .populate import initiate
-from .restapis import *
+from .restapis import get_request, analyze_review_sentiments, post_review
 
 
 # Get an instance of a logger
@@ -38,7 +33,7 @@ def login_user(request):
             data = {"userName": username, "status": "Authenticated"}
 
         return JsonResponse(data)
-    except:
+    except Exception as err:
         return JsonResponse({"message": "Invalid Credentials", "status": 400})
 
 
@@ -64,16 +59,17 @@ def registration(request):
     email = data["email"]
     username_exist = False
     email_exist = False
+    
     try:
         # Check if user already exists
         User.objects.get(username=username)
         username_exist = True
-    except:
+    except Exception as err:
         # If not, simply log this is a new user
         logger.debug("{} is new user".format(username))
 
     # If it is a new user
-    if not username_exist:
+    if not username_exist and not email_exist:
         # Create user in auth_user table
         user = User.objects.create_user(
             username=username,
@@ -99,7 +95,8 @@ def get_cars(request):
     car_models = CarModel.objects.select_related("car_make")
     cars = []
     for car_model in car_models:
-        cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
+        cars.append({"CarModel": car_model.name, 
+                     "CarMake": car_model.car_make.name})
 
     return JsonResponse({"CarModels": cars})
 
@@ -152,9 +149,10 @@ def add_review(request):
     if request.user.is_anonymous == False:
         data = json.loads(request.body)
         try:
-            response = post_review(data)
+            post_review(data)
             return JsonResponse({"status": 201, "message": "Review Posted"})
-        except:
-            return JsonResponse({"status": 401, "message": "Error in posting review"})
+        except Exception as err:
+            return JsonResponse({"status": 401, 
+                                 "message": "Error in posting review"})
 
     return JsonResponse({"status": 403, "message": "Unauthorized"})
