@@ -11,7 +11,6 @@ const Dealers = () => {
 
   // let root_url = window.location.origin
   let dealer_url = "/djangoapp/get_dealers";
-
   let dealer_url_by_state = "/djangoapp/get_dealers/";
 
   const filterDealers = async (state) => {
@@ -30,7 +29,11 @@ const Dealers = () => {
     const res = await fetch(dealer_url, {
       method: "GET"
     });
+    console.log("respone", res)
+
     const retobj = await res.json();
+    console.log("return object", retobj)
+
     if (retobj.status === 200) {
       let all_dealers = Array.from(retobj.dealers)
       let states = [];
