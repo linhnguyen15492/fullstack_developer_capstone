@@ -216,3 +216,64 @@ gh run view <run-id> --verbose
 ```
 
 ibmcloud ce application create --name react --image us.icr.io/sn-labs-honglinh154/frontend --registry-secret icr-secret --port 5173
+
+## Containerize application
+
+Create a Dockerfile in the server directory. The file should have the following steps listed:
+
+- Add a base image
+- Add the requirements.txt file
+- Install and update Python
+- Change the working directory
+- Expose port
+- Run the command to start the application
+
+```yaml
+FROM python:3.12.0-slim-bookworm
+
+ENV PYTHONBUFFERED 1
+ENV PYTHONWRITEBYTECODE 1
+
+ENV APP=/app
+
+# Change the workdir.
+WORKDIR $APP
+
+# Install the requirements
+COPY requirements.txt $APP
+
+RUN pip3 install -r requirements.txt
+
+# Copy the rest of the files
+COPY . $APP
+
+EXPOSE 8000
+
+RUN chmod +x /app/entrypoint.sh
+
+ENTRYPOINT ["/bin/bash","/app/entrypoint.sh"]
+
+CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "djangoproj.wsgi"]
+```
+
+Notice that the second-to-last command in the Dockerfile refers to entrypoint.sh. Create this file in the server directory. This file should containt the content given below:
+
+```bash
+#!/bin/sh
+
+# Make migrations and migrate the database.
+echo "Making migrations and migrating the database. "
+python manage.py makemigrations --noinput
+python manage.py migrate --noinput
+python manage.py collectstatic --noinput
+exec "$@"
+```
+
+```bash
+MY_NAMESPACE=$(ibmcloud cr namespaces | grep sn-labs-)
+echo $MY_NAMESPACE
+
+docker build -t us.icr.io/$MY_NAMESPACE/dealership .
+
+docker push us.icr.io/$MY_NAMESPACE/dealership
+```

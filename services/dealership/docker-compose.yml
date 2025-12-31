@@ -12,8 +12,8 @@ services:
       - mongo_data:/data/db
 
   # Node api service
-  dealership_api:
-    image: node_api:latest
+  node_api:
+    image: nodeapp:latest
     ports:
       - 3030:3030
     depends_on: 
