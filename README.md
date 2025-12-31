@@ -214,3 +214,5 @@ gh run list
 # After the list of workflow runs is displayed, pick the top most run-id from the output and view its details using command below:
 gh run view <run-id> --verbose
 ```
+
+ibmcloud ce application create --name react --image us.icr.io/sn-labs-honglinh154/frontend --registry-secret icr-secret --port 5173

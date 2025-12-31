@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     // Chỉ định nơi chứa file build, mặc định là dist
-    outDir: "dist",
+    outDir: "build",
     // Quan trọng: Gom tất cả js/css vào thư mục 'static' bên trong dist
     // để tương thích với cách quản lý của Django
     assetsDir: "static",
