@@ -12,10 +12,6 @@ from .restapis import get_request, analyze_review_sentiments, post_review
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
-
-# Create your views here.
-
-
 # Create a `login_request` view to handle sign in request
 @csrf_exempt
 def login_user(request):
@@ -34,7 +30,7 @@ def login_user(request):
 
         return JsonResponse(data)
     except Exception as err:
-        return JsonResponse({"message": "Invalid Credentials", "status": 400})
+        return JsonResponse({"message": f"Error: {err}", "status": 400})
 
 
 # Create a `logout_request` view to handle sign out request
@@ -48,8 +44,6 @@ def logout_request(request):
 # Create a `registration` view to handle sign up request
 @csrf_exempt
 def registration(request):
-    context = {}
-
     # Load JSON data from the request body
     data = json.loads(request.body)
     username = data["userName"]
@@ -59,7 +53,7 @@ def registration(request):
     email = data["email"]
     username_exist = False
     email_exist = False
-    
+
     try:
         # Check if user already exists
         User.objects.get(username=username)
@@ -67,6 +61,7 @@ def registration(request):
     except Exception as err:
         # If not, simply log this is a new user
         logger.debug("{} is new user".format(username))
+        return JsonResponse({"message": f"Error: {err}", "status": 400})
 
     # If it is a new user
     if not username_exist and not email_exist:
@@ -146,13 +141,13 @@ def get_dealer_details(request, dealer_id):
 
 # Create a `add_review` view to submit a review
 def add_review(request):
-    if request.user.is_anonymous == False:
+    if not request.user.is_anonymous:
         data = json.loads(request.body)
         try:
             post_review(data)
             return JsonResponse({"status": 201, "message": "Review Posted"})
         except Exception as err:
             return JsonResponse({"status": 401, 
-                                 "message": "Error in posting review"})
+                                 "message": f"Error in posting review, {err}"})
 
     return JsonResponse({"status": 403, "message": "Unauthorized"})
