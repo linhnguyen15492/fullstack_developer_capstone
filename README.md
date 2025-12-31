@@ -199,3 +199,18 @@ Let's look at GitHub jobs:
    - Install all JSHint linter npm install jshint.
    - Run the linting command on all the .js files in the database directory recursively
    - Print a message saying the linting was completed successfully
+
+```bash
+# Start by installing the GitHub CLI (gh) using the commands given below
+sudo apt update
+sudo apt install gh
+
+# Authenticate GitHub CLI using command gh auth login
+gh auth login
+
+# To get the list of workflow runs for your GitHub repository run the following command from your project directory in the terminal
+gh run list
+
+# After the list of workflow runs is displayed, pick the top most run-id from the output and view its details using command below:
+gh run view <run-id> --verbose
+```

@@ -1,0 +1,28 @@
+linhnguyen@DESKTOP-KV2R5JB:~/fullstack_developer_capstone$ gh run view 20611689458 --verbose
+
+✓ main Lint Code · 20611689458
+Triggered via push about 23 minutes ago
+
+JOBS
+✓ Lint JavaScript Files in 11s (ID 59197455024)
+  ✓ Set up job
+  ✓ Checkout Repository
+  ✓ Install Node.js
+  ✓ Install JSHint
+  ✓ Run Linter
+  ✓ Post Install Node.js
+  ✓ Post Checkout Repository
+  ✓ Complete job
+✓ Lint Python Files in 9s (ID 59197455052)
+  ✓ Set up job
+  ✓ Checkout Repository
+  ✓ Set up Python
+  ✓ Install dependencies
+  ✓ Print working directory
+  ✓ Run Linter
+  ✓ Post Set up Python
+  ✓ Post Checkout Repository
+  ✓ Complete job
+
+For more information about a job, try: gh run view --job=<job-id>
+View this run on GitHub: https://github.com/linhnguyen15492/fullstack_developer_capstone/actions/runs/20611689458
