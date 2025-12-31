@@ -12,6 +12,7 @@ from .restapis import get_request, analyze_review_sentiments, post_review
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
+
 # Create a `login_request` view to handle sign in request
 @csrf_exempt
 def login_user(request):
@@ -90,13 +91,14 @@ def get_cars(request):
     car_models = CarModel.objects.select_related("car_make")
     cars = []
     for car_model in car_models:
-        cars.append({"CarModel": car_model.name, 
+        cars.append({"CarModel": car_model.name,
                      "CarMake": car_model.car_make.name})
 
     return JsonResponse({"CarModels": cars})
 
 
-# Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
+# Update the `get_dealerships` render list of dealerships all by default, 
+# particular state if state is passed
 def get_dealerships(request, state="All"):
     if state == "All":
         endpoint = "fetchDealers"
@@ -147,7 +149,7 @@ def add_review(request):
             post_review(data)
             return JsonResponse({"status": 201, "message": "Review Posted"})
         except Exception as err:
-            return JsonResponse({"status": 401, 
+            return JsonResponse({"status": 401,
                                  "message": f"Error in posting review, {err}"})
 
     return JsonResponse({"status": 403, "message": "Unauthorized"})
