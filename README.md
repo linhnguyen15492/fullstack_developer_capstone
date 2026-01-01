@@ -1,5 +1,8 @@
 # fullstack_developer_capstone
 
+- **Repository name**: `https://github.com/linhnguyen15492/fullstack_developer_capstone`
+- **Project name**: `fullstack_developer_capstone`
+
 ## Architecture Overview
 
 1. Add user management to the Django application.
