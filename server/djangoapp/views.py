@@ -63,6 +63,7 @@ def registration(request):
         username_exist = True
     except Exception as err:
         # If not, simply log this is a new user
+        print(err)
         logger.debug(f"{username} does not exist.")
 
     try:
@@ -71,6 +72,7 @@ def registration(request):
         email_exist = True
     except Exception as err:
         # If not, simply log this is a new user
+        print(err)
         logger.debug(f"{email} does not exist.")
 
     # If it is a new user
@@ -85,10 +87,12 @@ def registration(request):
         )
         # Login the user and redirect to list page
         login(request, user)
-        data = {"userName": username, "status": 200, "message": "Authenticated"}
+        data = {"userName": username, "status": 200, 
+                "message": "Authenticated"}
         return JsonResponse(data)
     else:
-        data = {"userName": username, "status": 400, "message": "Already Registered"}
+        data = {"userName": username, "status": 400, 
+                "message": "Already Registered"}
         return JsonResponse(data)
 
 
