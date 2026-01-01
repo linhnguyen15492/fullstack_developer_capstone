@@ -42,7 +42,8 @@ const Register = () => {
         });
 
         const json = await res.json();
-        if (json.status) {
+        console.log(json);
+        if (json.status === "Authenticated") {
             // Save username in session and reload home
             sessionStorage.setItem('username', json.userName);
             window.location.href = window.location.origin;

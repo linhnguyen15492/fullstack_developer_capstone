@@ -41,3 +41,30 @@ content-type: application/json
     "userName": "linhnguyen",
     "password": "abc123"
 }
+
+###
+
+POST http://127.0.0.1:8000/djangoapp/register HTTP/1.1
+content-type: application/json
+
+{
+    "userName": "a6",
+    "password": "abc123",
+    "firstName" : "Linh",
+    "lastName" : "Nguyen",
+    "email" : "thuy@gmail.com"
+}
+
+###
+
+POST http://127.0.0.1:8000/djangoapp/register HTTP/1.1
+content-type: application/json
+
+{
+    "userName": "a7",
+    "password": "abc123",
+    "firstName" : "Linh",
+    "lastName" : "Nguyen",
+    "email" : "thuy@gmail.com"
+}
+

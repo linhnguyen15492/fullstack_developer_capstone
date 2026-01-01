@@ -47,6 +47,7 @@ def logout_request(request):
 def registration(request):
     # Load JSON data from the request body
     data = json.loads(request.body)
+    print(data)
     username = data["userName"]
     password = data["password"]
     first_name = data["firstName"]
@@ -57,12 +58,20 @@ def registration(request):
 
     try:
         # Check if user already exists
-        User.objects.get(username=username)
+        user = User.objects.get(username=username)
+        print("Username already exists")
         username_exist = True
     except Exception as err:
         # If not, simply log this is a new user
-        logger.debug("{} is new user".format(username))
-        return JsonResponse({"message": f"Error: {err}", "status": 400})
+        logger.debug(f"{username} does not exist.")
+
+    try:
+        user = User.objects.filter(email=email).first()
+        print("Email already exists")
+        email_exist = True
+    except Exception as err:
+        # If not, simply log this is a new user
+        logger.debug(f"{email} does not exist.")
 
     # If it is a new user
     if not username_exist and not email_exist:
@@ -76,10 +85,10 @@ def registration(request):
         )
         # Login the user and redirect to list page
         login(request, user)
-        data = {"userName": username, "status": "Authenticated"}
+        data = {"userName": username, "status": 200, "message": "Authenticated"}
         return JsonResponse(data)
     else:
-        data = {"userName": username, "error": "Already Registered"}
+        data = {"userName": username, "status": 400, "message": "Already Registered"}
         return JsonResponse(data)
 
 
@@ -91,8 +100,7 @@ def get_cars(request):
     car_models = CarModel.objects.select_related("car_make")
     cars = []
     for car_model in car_models:
-        cars.append({"CarModel": car_model.name,
-                     "CarMake": car_model.car_make.name})
+        cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
 
     return JsonResponse({"CarModels": cars})
 
@@ -149,7 +157,8 @@ def add_review(request):
             post_review(data)
             return JsonResponse({"status": 201, "message": "Review Posted"})
         except Exception as err:
-            return JsonResponse({"status": 401,
-                                 "message": f"Error in posting review, {err}"})
+            return JsonResponse(
+                {"status": 401, "message": f"Error in posting review, {err}"}
+            )
 
     return JsonResponse({"status": 403, "message": "Unauthorized"})

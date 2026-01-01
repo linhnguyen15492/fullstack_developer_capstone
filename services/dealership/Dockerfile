@@ -1,7 +1,4 @@
-FROM node:24-alpine
-
-
-RUN npm install -g npm@9.1.3
+FROM node:22-bullseye-slim
 
 ADD package.json .
 ADD app.js .
@@ -10,6 +7,7 @@ ADD dealership.js .
 ADD data/dealerships.json .
 ADD data/reviews.json .
 COPY . .
+
 RUN npm install
 
 EXPOSE 3030

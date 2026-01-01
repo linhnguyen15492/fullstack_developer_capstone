@@ -42,12 +42,12 @@ const Register = () => {
         });
 
         const json = await res.json();
-        if (json.status) {
+        if (json.status === 200) {
             // Save username in session and reload home
             sessionStorage.setItem('username', json.userName);
             window.location.href = window.location.origin;
         }
-        else if (json.error === "Already Registered") {
+        else if (json.message === "Already Registered") {
             alert("The user with same username is already registered");
             window.location.href = window.location.origin;
         }
